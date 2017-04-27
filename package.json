@@ -1,6 +1,6 @@
 {
   "name": "sendmailer",
-  "version": "0.5.1",
+  "version": "0.8.0",
   "description": "system message send mail to users",
   "main": "app.js",
   "dependencies": {
@@ -18,5 +18,5 @@
     "start": "nodemon app.js"
   },
   "author": "Christian Valdez",
-  "license": "BSD-2-Clause"
+  "license": "MIT"
 }
