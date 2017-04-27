@@ -8,10 +8,17 @@ exports.sendmail = function (request, response) {
     //     "body": "<strong>Hi! this is body test from node.</strong>",
     //     "status": true
     // }
-    var kwargs = JSON.parse(request.query["mail"]);
-    if (typeof kwargs !== {}) {
-        kwargs = JSON.parse(kwargs);
-        console.info('typo de object' + typeof kwargs);
+    var kwargs;
+    if (request.query.hasOwnProperty('mail')) {
+        kwargs = JSON.parse(request.query["mail"]);
+        if (typeof kwargs !== {}) {
+            kwargs = JSON.parse(kwargs);
+            console.info('typo de object' + typeof kwargs);
+        }
+    }
+    else {
+        // empty
+        kwargs = {};
     }
     // prepare data for send mail
     var auth = {};
@@ -61,10 +68,10 @@ exports.sendmail = function (request, response) {
     }
     // console.info('Type of parameter ' + typeof(request.param));
     // console.info('Type of parameter ' + typeof(request.params));
-    response.setHeader('Content-Type', 'application/json');
-    response.type('application/json');
+    response.setHeader('Content-Type', 'text/plain');
+    response.type('text/plain');
     console.warn(options);
-    if (Object.keys(kwargs).length) {
+    if (!kwargs.hasOwnProperty('raise')) {
         smtpTransport.sendMail(options, function (error, result) {
             console.error(error);
             if (error) {
@@ -75,10 +82,10 @@ exports.sendmail = function (request, response) {
             else {
                 kwargs['status'] = true;
             }
-            response.json(kwargs);
+            response.jsonp(kwargs);
         });
     }
     else {
-        response.json(kwargs);
+        response.jsonp(kwargs);
     }
 };
