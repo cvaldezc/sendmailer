@@ -1,0 +1,25 @@
+//doctype 5
+html
+  head
+    title Send Mail
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js')
+    script(src='/javascripts/sendmail.js')
+    link(rel='stylesheet', href='/stylesheets/sendmail.css')
+  body
+    h1= title
+    | <script type='text/javascript'>
+    |  //$(document).ready(function (){
+    |  //setTimeout(function() { document.form1.submit(); }, 0);
+    | //});
+    | </script>
+
+    form(action='/enviar',name='form1',method='post')
+      label Email
+      input(type='email',name='email',id='email',value= para)
+      br
+      label Asunto
+      input(type='text',name='asunto',id='asunto',value= asunto)
+      br
+      textarea(name='texto',id='texto',)= texto
+      br
+      input(type='submit',value='enviar')
