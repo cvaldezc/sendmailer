@@ -10,10 +10,11 @@ exports.sendmail = function (request:any, response:any) {
     //     "body": "<strong>Hi! this is body test from node.</strong>",
     //     "status": true
     // }
+    // console.log(request.query);
     var kwargs: any;
     if (request.query.hasOwnProperty('mail')){
         kwargs = JSON.parse(request.query["mail"]);
-        if (typeof kwargs !== {}){
+        if (typeof kwargs == "string"){
             kwargs = JSON.parse(kwargs);
             console.info('typo de object' + typeof kwargs );
         }
