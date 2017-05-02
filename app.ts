@@ -9,9 +9,12 @@ user = require("./routes/user");
 http = require("http");
 path = require("path");
 app = express();
+
+app.set("ip", process.env.IP || "0.0.0.0");
 app.set("port", process.env.PORT || 3000);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
+
 app.use(express.favicon());
 app.use(express.logger("dev"));
 app.use(express.json());
@@ -19,15 +22,17 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express["static"](path.join(__dirname, "public")));
+
 if ("development" === app.get("env")) {
   app.use(express.errorHandler());
 }
+
 var mail = require("./routes/mailer")
 app.get("/", routes.index);
 app.get("/mailer/", routes.envelop);
 app.post("/enviar", routes.enviar);
 app.get("/users", user.list);
 app.get('/send', mail.sendmail)
-http.createServer(app).listen(app.get("port"), function() {
-  console.log("Express server listening on port " + app.get("port"));
+http.createServer(app).listen(app.get("port"), app.get("ip"), function() {
+  console.log("Express server listening on port " + app.get("ip") + app.get("port"));
 });
